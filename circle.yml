@@ -1,6 +1,6 @@
 machine:
   python:
-    version: 2.7.
+    version: 2.7.13
   ruby:
     version: 2.0.0-p451
 checkout:
