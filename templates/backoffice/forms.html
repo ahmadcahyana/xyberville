@@ -1,0 +1,112 @@
+{% extends 'backoffice/base.html' %}
+{% load pipeline %}
+{% load i18n static %}
+{% load static from staticfiles %}
+{% block head_title %}{{ title }}{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'css/main.css' %}" type="text/css" media="all" rel="stylesheet">
+    {% stylesheet 'select2' %}
+    {% stylesheet 'datepicker' %}
+{% endblock %}
+{% block bodyclass %}{% endblock %}
+{% block page_header %}{{ header }}{% endblock %}
+{% block content %}
+    <section class="content">
+        <div class="row">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Tambahkan Warga Baru</h3>
+                </div>
+                <form role="form" method="{{ method|default:'POST'}}" action="{{ action }}" class = 'form' enctype="multipart/form-data" {% if novalidate %} novalidate="novalidate" {% endif %}>
+                    <div class="box-body">
+                        <div class="col-md-3">
+                            {% if form.photo %}
+                                <div class="text-center">
+                                    {% if photo %}
+                                        <img id="imageHolder" src="{{ photo.url }}" class="avatar" alt="avatar" height="300" width="200">
+{#                                    {% else %}#}
+{#                                        <img id="imageHolder" src="{% static 'img/default-user.png' %}" class="avatar" alt="avatar">#}
+                                    {% endif %}
+                                    <hr>
+                                    <div class="input-group image-preview">
+{#                                        {{ form.photo.label_tag }}#}
+                                        <input type="text" value="{{ form.photo.value|default_if_none:"" }}" class="form-control image-preview-filename" disabled="disabled">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                                <span class="glyphicon glyphicon-remove"></span> Clear
+                                            </button>
+                                            <div class="btn btn-default image-preview-input">
+                                                <span class="glyphicon glyphicon-folder-open"></span>
+                                                <span class="image-preview-input-title">Browse</span>
+                                                {{ form.photo }}
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+{#                                <tr class = "field-photo">#}
+{#                                    <th>{{ form.photo.label_tag }}</th>#}
+{#                                    <td>#}
+{#                                        {% if photo %}#}
+{#                                            <img class="thumbnail" src="{{ photo.thumbnails.size_90.url }}" />#}
+{#                                        {% endif %}#}
+{#                                        <div class="partner_photo">#}
+{#                                            {{ form.photo }}#}
+{#                                        </div>#}
+{#                                        {{ form.photo.errors }}#}
+{#                                    </td>#}
+{#                                </tr>#}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-9 personal-info">
+                            {% csrf_token %}
+                            {% for field in form.hidden_fields %}
+                                {{ field }}
+                            {% endfor %}
+                            {% for field in form.visible_fields %}
+                                {% if field.name in form.more_options or field == form.photo %}{% else %}
+                                    <div class="form-group {% if field.errors %} has-error{% endif %}">
+                                        <label for="input{{ field.name }}" class="col-lg-3 control-label">
+                                            {{ field.label }}
+                                        </label>
+                                        <div class="col-lg-8">
+                                            {{ field }}
+                                            <span class="help-block">
+                                            {{ field.errors }}
+                                        </span>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="form-group">
+                                <div class="row">
+                                    <label class="col-md-3 control-label"></label>
+                                    <div class="col-md-8">
+                                        <input type="submit" class="btn btn-primary" value="Save Changes">
+                                        <span></span>
+                                        <input type="reset" class="btn btn-warning" value="Cancel">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="box-footer">
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    {% block extra_javascript %}
+        {% javascript 'select2' %}
+        {{ form.media }}
+        {% javascript 'datepicker' %}
+        <script>
+            $('#tanggal_lahir, #tanggal_pernikahan, #tanggal_perceraian').datepicker({
+                format: 'yyyy-mm-dd',
+            });
+        </script>
+    {% endblock %}
+{% endblock %}
+
+

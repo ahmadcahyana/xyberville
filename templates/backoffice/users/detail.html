@@ -1,0 +1,278 @@
+{% extends 'backoffice/base.html' %}
+{% load thumbnail %}
+{% load pipeline %}
+{% load i18n static %}
+{% block head_title %}{{ user.name }} | User Detail{% endblock %}
+{% block extra_css %}
+    {% stylesheet 'dataTables' %}
+{% endblock %}
+{% block bodyclass %}table-page{% endblock %}
+{% block page_header %}Detail Warga{% endblock %}
+{% block breadcrumb %}
+    <li><a href="{% url 'backoffice:users:index' %}">Warga</a></li>
+    <li class="active">Detail</li>
+{% endblock %}
+{% block content %}
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-3">
+
+                <!-- Profile Image -->
+                <div class="box box-primary">
+                    <div class="box-body box-profile">
+                        {% thumbnail user.profile.photo "100x100" crop="center" as im %}
+                            <img class="profile-user-img img-responsive img-circle" src="{{ im.url }}" alt="User profile picture">
+                        {% endthumbnail %}
+                        <h3 class="profile-username text-center">
+                            {{ user.name }}
+                        </h3>
+                        <p class="text-muted text-center">{{ user.profile.pekerjaan }}</p>
+
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b>NIK</b> <a class="pull-right">{{ user.profile.nik }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>KK</b> <a class="pull-right">
+                                {{ user.profile.keluarga.nomor_kk }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Total Keluarga</b> <a class="pull-right">
+                                {{ user.profile.keluarga.jumlah_keluarga }}</a>
+                            </li>
+                        </ul>
+                        <a href="{% url 'backoffice:users:edit' user.id %}" class="btn btn-primary btn-block">
+                            <b>Edit</b>
+                        </a>
+                        <a href="#" class="btn btn-primary btn-block">
+                            <b>Print</b>
+                        </a>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <div class="col-md-9">
+                <!-- Custom Tabs -->
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_1" data-toggle="tab">Profil</a></li>
+                        <li><a href="#tab_2" data-toggle="tab">Keluarga</a></li>
+                        <li><a href="#tab_3" data-toggle="tab">Akta</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>NIK</th>
+                                        <td>:</td>
+                                        <td>{% if user.profile.nik %}
+                                            {{ user.profile.nik }}
+                                        {% else %} -
+                                        {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <td>:</td>
+                                        <td>{{ user.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Alamat</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.alamat }}, RT. {{ user.profile.rt }} / RW.
+                                            {{ user.profile.rw }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <td></td>
+                                        <td>KEC. {{ user.profile.district }},
+                                            KEL. {{ user.profile.village }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <td></td>
+                                        <td>{{ user.profile.regency }} -
+                                            {{ user.profile.kode_pos }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Kewarganegaraan</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.get_kewarganegaraan_display }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Paspor</th>
+                                        <td>:</td>
+                                        <td>{% if user.profile.paspor %}
+                                            {{ user.profile.paspor }} Exp. {{ user.profile.paspor_kadaluarsa }}
+                                        {% else %} -
+                                        {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Jenis Kelamin</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.get_kelamin_display }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tempat, Tgl Lahir</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.tempat_lahir }},
+                                            {{ user.profile.tanggal_lahir|date:"d F Y" }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Golongan Darah</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.get_golongan_darah_display }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Agama</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.get_agama_display }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status Pernikahan</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.get_status_pernikahan_display }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Hubungan Keluarga</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.get_hubungan_keluarga_display }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Pendidikan</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.get_pendidikan_display }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Pekerjaan</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.pekerjaan }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Telpon / Mobile</th>
+                                        <td>:</td>
+                                        <td>
+                                            {% if user.profile.telepon and user.profile.mobile %}
+                                                {{ user.profile.telepon }} / {{ user.profile.mobile }}
+                                            {% elif user.profile.telepon == '' and user.profile.mobile %}
+                                                - / { user.profile.mobile }}
+                                            {% elif user.profile.telepon and user.profile.mobile == '' %}
+                                                {{ user.profile.telepon }} / -
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status Kependudukan</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.get_status_penduduk_display }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status Tempat Tinggal</th>
+                                        <td>:</td>
+                                        <td>{{ user.profile.get_status_tempat_tinggal_display }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_2">
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nama</th>
+                                        <th>NIK</th>
+                                        <th>Nomor Paspor</th>
+                                        <th>Alamat</th>
+                                    </tr>
+                                    {% for warga in profiles %}
+                                        <tr>
+                                            <td>
+                                                <a href="{% url 'backoffice:users:detail' warga.user.id %}">
+                                                    {{ warga.user.id }}
+                                                </a>
+                                            </td>
+                                            <td>{{ warga.user.name }}</td>
+                                            <td>
+                                                <a href="{% url 'backoffice:users:detail' warga.user.id %}">
+                                                    {{ warga.nik }}
+                                                </a>
+                                            </td>
+                                            <td>{{ warga.passport }}</td>
+                                            <td>{{ warga.alamat }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_3">
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th></th>
+                                        <th>Akta Lahir</th>
+                                        <th>Akta Nikah</th>
+                                        <th>Akta Cerai</th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            {% if user.profile.nomor_akta_lahir %}
+                                                {{ user.profile.nomor_akta_lahir }}
+                                            {% else %} -
+                                            {% endif %}</td>
+                                        <td>
+                                            {% if user.profile.nomor_akta_nikah %}
+                                                {{ user.profile.nomor_akta_nikah }}
+                                            {% else %} -
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.profile.nomor_akta_cerai %}
+                                                {{ user.profile.nomor_akta_cerai }}
+                                            {% else %} -
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tanggal Akta</th>
+                                        <td>
+                                            {% if user.profile.tanggal_akta_lahir %}
+                                                {{ user.profile.tanggal_akta_lahir }}
+                                            {% else %} -
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.profile.tanggal_pernikahan %}
+                                                {{ user.profile.tanggal_pernikahan }}
+                                            {% else %} -
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if user.profile.tanggal_perceraian %}
+                                                {{ user.profile.tanggal_perceraian }}
+                                            {% else %} -
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- nav-tabs-custom -->
+            </div>
+        </div>
+    </section>
+    {% block extra_javascript %}
+        {% javascript 'dataTables' %}
+        {% javascript 'dataTablesBootstrap' %}
+    {% endblock %}
+{% endblock %}

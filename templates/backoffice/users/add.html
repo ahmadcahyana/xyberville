@@ -1,0 +1,165 @@
+{% extends 'backoffice/base.html' %}
+{% load pipeline %}
+{% load selectable_tags %}
+{% load i18n static %}
+{% block head_title %}Warga Baru{% endblock %}
+{% block extra_css %}
+    {% stylesheet 'iCheck' %}
+    {% stylesheet 'cropper' %}
+    <link href="{% static 'css/main.css' %}" type="text/css" media="all" rel="stylesheet">
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/base/jquery-ui.css" type="text/css">
+    <link href="{% static 'selectable/css/dj.selectable.css' %}" type="text/css" media="all" rel="stylesheet">
+{% endblock %}
+{% block bodyclass %}{% endblock %}
+{% block page_header %}{% endblock %}
+{% block breadcrumb %}
+    <li><a href="{% url 'backoffice:users:index' %}">Users</a></li>
+    <li class="active">Tambah</li>
+{% endblock %}
+{% block content %}
+    <section class="content">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h2 class="box-title">Warga Baru</h2>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="row">
+                    <form role="form" method="{{ method|default:'POST'}}" action="{{ action }}" class="form-horizontal" role="form" enctype="multipart/form-data" {% if novalidate %} novalidate="novalidate" {% endif %}>
+{#                        <div class="col-md-3">#}
+{#                            {% if form.photo %}#}
+{#                                <div class="text-center">#}
+{#                                    <img id="imageHolder" src="{% static 'img/default-user.png' %}" class="avatar" alt="avatar">#}
+{#                                    <hr>#}
+{#                                    <div class="input-group image-preview">#}
+{#                                        <input type="text" class="form-control image-preview-filename" disabled="disabled">#}
+{#                                        <span class="input-group-btn">#}
+{#                                            <button type="button" class="btn btn-default image-preview-clear" style="display:none;">#}
+{#                                                <span class="glyphicon glyphicon-remove"></span> Clear#}
+{#                                            </button>#}
+{#                                            <div class="btn btn-default image-preview-input">#}
+{#                                                <span class="glyphicon glyphicon-folder-open"></span>#}
+{#                                                <span class="image-preview-input-title">Browse</span>#}
+{#                                                {{ form.photo }}#}
+{#                                            </div>#}
+{#                                        </span>#}
+{#                                    </div>#}
+                                    {#                                    {{ form.photo }}#}
+{#                                </div>#}
+{#                            {% endif %}#}
+{#                        </div>#}
+
+                        <!-- edit form column -->
+                        <div class="col-md-9 personal-info">
+                            <h3>Personal info</h3>
+                            {% csrf_token %}
+                            {% for field in form.hidden_fields %}
+                                {{ field }}
+                            {% endfor %}
+                            {% for field in form.visible_fields %}
+                                {% if field.name in form.more_options or field == form.photo %}{% else %}
+                                    <div class="form-group {% if field.errors %}has-error{% endif %}">
+                                        <label for="input{{ field.name }}" class="col-lg-3 control-label">
+                                            {{ field.label }}
+                                        </label>
+                                        <div class="col-lg-8">
+                                            {{ field }}
+                                            <span class="help-block">
+                                            {{ field.errors }}
+                                        </span>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-8">
+                                    <input type="submit" class="btn btn-primary" value="Save Changes">
+                                    <span></span>
+                                    <input type="reset" class="btn btn-default" value="Cancel">
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
+                    </form>
+                </div>
+            </div>
+            <div class="box-footer">
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modal" aria-labelledby="modalLabel" role="dialog" tabindex="-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Crop the image</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <img id="image" src="../docs/images/picture.jpg" alt="Picture">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    {% block extra_javascript %}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.js"></script>
+        <script type="text/javascript" src="{% static 'selectable/js/jquery.dj.selectable.js' %}"></script>
+        {% javascript 'iCheck' %}
+        {% javascript 'cropper' %}
+        <script>
+            function readURL(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#imageHolder').attr('src', e.target.result);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#id_photo").change(function(){
+                readURL(this);
+            });
+        </script>
+        <script>
+            $(function () {
+                var $image = $('#image');
+                var cropBoxData;
+                var canvasData;
+
+                $('#modal').on('shown.bs.modal', function () {
+                    $image.cropper({
+                        autoCropArea: 0.5,
+                        ready: function () {
+                            $image.cropper('setCanvasData', canvasData);
+                            $image.cropper('setCropBoxData', cropBoxData);
+                        }
+                    });
+                }).on('hidden.bs.modal', function () {
+                    cropBoxData = $image.cropper('getCropBoxData');
+                    canvasData = $image.cropper('getCanvasData');
+                    $image.cropper('destroy');
+                });
+            });
+        </script>
+    {% endblock %}
+{% endblock %}
+
+

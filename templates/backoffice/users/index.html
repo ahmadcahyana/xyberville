@@ -1,0 +1,172 @@
+{% extends 'backoffice/base.html' %}
+{% load pipeline %}
+{% load i18n static %}
+{% block head_title %}Semua Warga{% endblock %}
+{% block extra_css %}
+    {% stylesheet 'dataTables' %}
+    {% stylesheet 'select2' %}
+{% endblock %}
+{% block bodyclass %}table-page{% endblock %}
+{% block page_header %}Semua Warga{% endblock %}
+{% block breadcrumb %}
+    <li class="active">Warga</li>
+{% endblock %}
+{% block content %}
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>{{ users.count }}</h3>
+
+                    <p>Total Penduduk</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-users"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>150</h3>
+
+                    <p>New Orders</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                    <p>Bounce Rate</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>65</h3>
+
+                    <p>Unique Visitors</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <!-- /.row -->
+
+    <!-- =========================================================== -->
+
+    <div class="box">
+    <div class="box-header">
+        <h3 class="box-title"></h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>NIK</th>
+                <th>Nama</th>
+                {#                <th>Telepon / Mobile</th>#}
+                <th>Umur</th>
+                <th>Pendidikan</th>
+                <th>Pekerjaan</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>
+                        <a href="{% url 'backoffice:users:detail' user.id %}">
+                            {{ user.id }}
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="{% url 'backoffice:users:detail' user.id %}">
+                            {{ user.profile.nik }}
+                        </a>
+                    </td>
+                    <td>{{ user.name }}</td>
+                    {#                    <td>#}
+                    {#                        {% if user.profile.telpon%}#}
+                    {#                            {{ user.profile.telpon }} /#}
+                    {#                        {% else %}#}
+                    {#                            - /#}
+                    {#                        {% endif %}#}
+                    {#                        {% if user.profile.mobile %}#}
+                    {#                            {{ user.profile.mobile }}#}
+                    {#                        {% else %}#}
+                    {#                            -#}
+                    {#                        {% endif %}#}
+                    {#                    </td>#}
+                    <td>{{ user.profile.age }}</td>
+                    <td>{{ user.profile.get_pendidikan_display }}</td>
+                    <td>{{ user.profile.pekerjaan }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>ID</th>
+                <th>NIK</th>
+                <th>Nama</th>
+                {#                <th>Telepon / Mobile</th>#}
+                <th>Umur</th>
+                <th>Pendidikan</th>
+                <th>Pekerjaan</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.box-body -->
+
+{% endblock %}
+{% block extra_javascript %}
+    <!-- DataTables -->
+    {% javascript 'dataTables' %}
+    {% javascript 'dataTablesBootstrap' %}
+    {% javascript 'select2' %}
+    {{ form.media }}
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                autoWidth: false,
+
+            });
+        });
+    </script>
+{% endblock %}

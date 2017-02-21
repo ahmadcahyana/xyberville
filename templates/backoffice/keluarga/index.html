@@ -1,0 +1,77 @@
+{% extends 'backoffice/base.html' %}
+{% load pipeline %}
+{% load i18n static %}
+{% block head_title %}Semua Warga{% endblock %}
+{% block extra_css %}
+    {% stylesheet 'dataTables' %}
+    {% stylesheet 'select2' %}
+{% endblock %}
+{% block bodyclass %}table-page{% endblock %}
+{% block page_header %}Semua Warga{% endblock %}
+{% block breadcrumb %}
+    <li class="active">Warga</li>
+{% endblock %}
+{% block content %}
+    <div class="box">
+    <div class="box-header">
+        <h3 class="box-title"></h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nomor KK</th>
+                <th>Kepala Keluarga</th>
+                <th>Jumlah Keluarga</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for keluarga in keluarga_ %}
+                <tr>
+                    <td>
+                        <a href="{% url 'backoffice:keluarga:details' keluarga.id %}">
+                            {{ keluarga.id }}
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="{% url 'backoffice:keluarga:details' keluarga.id %}">
+                            {{ keluarga.nomor_kk }}
+                        </a>
+                    </td>
+                    <td>{{ keluarga.kepala_keluarga.name }}</td>
+                    <td>{{ keluarga.jumlah_keluarga }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>ID</th>
+                <th>Nomor KK</th>
+                <th>Kepala Keluarga</th>
+                <th>Jumlah Keluarga</th>
+
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- /.box-body -->
+
+{% endblock %}
+{% block extra_javascript %}
+    <!-- DataTables -->
+    {% javascript 'dataTables' %}
+    {% javascript 'dataTablesBootstrap' %}
+    {% javascript 'select2' %}
+    {{ form.media }}
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                autoWidth: false,
+
+            });
+        });
+    </script>
+{% endblock %}

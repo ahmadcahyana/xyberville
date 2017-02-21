@@ -1,0 +1,16 @@
+machine:
+  python:
+    version: 2.7.
+  ruby:
+    version: 2.0.0-p451
+checkout:
+  post:
+    - bower install
+    - mv xyberville/settings_local.ci.py xyberville/settings_local.py
+dependencies:
+  pre:
+    - gem install sass
+    - gem cleanup sass
+    - npm -g install yuglify
+  post:
+    - python manage.py collectstatic -l --noinput
