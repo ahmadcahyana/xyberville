@@ -60,7 +60,7 @@ def edit(request, id):
         'nomor_kk': keluarga.nomor_kk,
         'kepala_keluarga': keluarga.kepala_keluarga,
         'alamat': keluarga.alamat,
-        'rt': keluarga.rt,
+        'struktur_organisasi': keluarga.rt,
         'rw': keluarga.rw,
         'telepon': keluarga.telepon,
         'mobile': keluarga.mobile,

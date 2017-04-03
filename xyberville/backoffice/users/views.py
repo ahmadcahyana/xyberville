@@ -1,11 +1,13 @@
-
+from django.http import HttpResponse
+from xyberville.apps.users.printing import MyPrint
+from io import BytesIO
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 from xyberville.apps.users.decorators import super_user_required
 from xyberville.apps.users.models import User
+from xyberville.apps.keluarga.models import Keluarga
 from xyberville.apps.logs.models import UserLogs
-from xyberville.apps.profiles.models import Profile
 from .forms import WargaCreationForm, WargaEditForm, WargaFilterForm
 
 
@@ -32,9 +34,15 @@ def detail(request, id):
     except AttributeError:
         profiles = None
 
+    try:
+        keluarga = user.profile.keluarga
+    except Keluarga.DoesNotExist:
+        keluarga = None
+
     context_data = {
         'user': user,
         'profiles': profiles,
+        'keluarga': keluarga,
         'title': user.name,
         'page': 'users',
         'sub_page': 'user_detail'
@@ -67,7 +75,7 @@ def edit(request, id):
         'username': user.username,
         'nik': user.profile.nik,
         'alamat': user.profile.alamat,
-        'rt': user.profile.rt,
+        'struktur_organisasi': user.profile.rt,
         'rw': user.profile.rw,
         'province': user.profile.province,
         'regency': user.profile.regency,
@@ -128,3 +136,17 @@ def edit(request, id):
         'sub_page': 'user_edit',
     }
     return render(request, 'backoffice/forms.html', context_data)
+
+
+def print_surat_pengantar(request, id):
+    user = get_object_or_404(User, id=id)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="My Users.pdf"'
+
+    buffer = BytesIO()
+
+    report = MyPrint(buffer, 'Letter')
+    pdf = report.print_user(user)
+
+    response.write(pdf)
+    return response

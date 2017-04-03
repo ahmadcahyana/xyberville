@@ -22,4 +22,9 @@ urlpatterns = patterns(
         'edit',
         name='edit'
     ),
+    url(
+        r'^(?P<id>\d+)/pengantar/$',
+        'print_surat_pengantar',
+        name='print_surat_pengantar'
+    ),
 )

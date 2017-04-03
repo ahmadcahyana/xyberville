@@ -44,6 +44,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = (
+    'table',
     'dal',
     'dal_select2',
     'dal_queryset_sequence',
@@ -63,6 +64,8 @@ INSTALLED_APPS = (
     'xyberville.apps.keluarga',
     'xyberville.apps.pekerjaan',
     'xyberville.apps.profiles',
+    'xyberville.apps.struktur_organisasi',
+    'xyberville.apps.arsip',
     'xyberville.apps.permissions',
     'xyberville.apps.logs',
     'xyberville.apps.regions',
@@ -71,7 +74,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -156,6 +159,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_files"),
 )
 
+# STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 STATICFILES_FINDERS = (
@@ -170,32 +174,32 @@ PIPELINE = {
     'STYLESHEETS': {
         'bootstrap': {
             'source_filenames': (
-                'bower/AdminLTE/bootstrap/css/bootstrap.css',
+                'AdminLTE/bootstrap/css/bootstrap.css',
             ),
             'output_filename': 'AdminLTE/bootstrap/css/bootstrap.css'
         },
         'adminLTE': {
             'source_filenames': (
-                'bower/AdminLTE/dist/css/AdminLTE.css',
+                'AdminLTE/dist/css/AdminLTE.css',
             ),
             'output_filename': 'AdminLTE/dist/css/AdminLTE.css'
         },
         'adminLTESkins': {
             'source_filenames': (
-                'bower/AdminLTE/dist/css/skins/_all-skins.css',
+                'AdminLTE/dist/css/skins/_all-skins.css',
             ),
             'output_filename': 'AdminLTE/dist/css/skins/_all-skins.css'
         },
         'dataTables': {
             'source_filenames': (
-                'bower/AdminLTE/plugins/datatables/dataTables.bootstrap.css',
+                'AdminLTE/plugins/datatables/dataTables.bootstrap.css',
             ),
             'output_filename':
                 'AdminLTE/plugins/datatables/dataTables.bootstrap.css'
         },
         'iCheck': {
             'source_filenames': (
-                'bower/AdminLTE/plugins/iCheck/all.css',
+                'AdminLTE/plugins/iCheck/all.css',
             ),
             'output_filename': 'AdminLTE/plugins/iCheck/all.css'
         },
@@ -243,7 +247,7 @@ PIPELINE = {
         },
         'datepicker': {
             'source_filenames': (
-                'bower/AdminLTE/plugins/datepicker/datepicker3.css',
+                'AdminLTE/plugins/datepicker/datepicker3.css',
             ),
             'output_filename': 'AdminLTE/plugins/datepicker/datepicker3.css'
         },
@@ -263,46 +267,46 @@ PIPELINE = {
         },
         'bootstrap': {
             'source_filenames': (
-                'bower/AdminLTE/bootstrap/js/bootstrap.js',
+                'AdminLTE/bootstrap/js/bootstrap.js',
             ),
             'output_filename': 'AdminLTE/bootstrap/js/bootstrap.min.js'
         },
         'slimscroll': {
             'source_filenames': (
-                'bower/AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js',
+                'AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js',
             ),
             'output_filename':
                 'AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js'
         },
         'fastclick': {
             'source_filenames': (
-                'bower/AdminLTE/plugins/fastclick/fastclick.min.js',
+                'AdminLTE/plugins/fastclick/fastclick.min.js',
             ),
             'output_filename': 'AdminLTE/plugins/fastclick/fastclick.min.js'
         },
         'app': {
             'source_filenames': (
-                'bower/AdminLTE/dist/js/app.min.js',
+                'AdminLTE/dist/js/app.min.js',
             ),
             'output_filename': 'AdminLTE/dist/js/app.min.js'
         },
         'dataTables': {
             'source_filenames': (
-                'bower/AdminLTE/plugins/datatables/jquery.dataTables.min.js',
+                'AdminLTE/plugins/datatables/jquery.dataTables.min.js',
             ),
             'output_filename':
                 'AdminLTE/plugins/datatables/jquery.dataTables.min.js'
         },
         'dataTablesBootstrap': {
             'source_filenames': (
-                'bower/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js',
+                'AdminLTE/plugins/datatables/dataTables.bootstrap.min.js',
             ),
             'output_filename':
                 'AdminLTE/plugins/datatables/dataTables.bootstrap.min.js'
         },
         'iCheck': {
             'source_filenames': (
-                'bower/AdminLTE/plugins/iCheck/icheck.js',
+                'AdminLTE/plugins/iCheck/icheck.js',
             ),
             'output_filename': 'AdminLTE/plugins/iCheck/icheck.js'
         },
@@ -320,7 +324,7 @@ PIPELINE = {
         },
         'datepicker': {
             'source_filenames': (
-                'bower/AdminLTE/plugins/datepicker/bootstrap-datepicker.js',
+                'AdminLTE/plugins/datepicker/bootstrap-datepicker.js',
             ),
             'output_filename': 'AdminLTE/plugins/datepicker/bootstrap-datepicker.js'
         },

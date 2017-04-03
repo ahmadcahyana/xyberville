@@ -15,7 +15,9 @@
         <div class="row">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Tambahkan Warga Baru</h3>
+                    <h3 class="box-title">
+                        {% block form_title %}{{ form_title }}{% endblock %}
+                    </h3>
                 </div>
                 <form role="form" method="{{ method|default:'POST'}}" action="{{ action }}" class = 'form' enctype="multipart/form-data" {% if novalidate %} novalidate="novalidate" {% endif %}>
                     <div class="box-body">

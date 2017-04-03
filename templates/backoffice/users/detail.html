@@ -34,8 +34,9 @@
                                 <b>NIK</b> <a class="pull-right">{{ user.profile.nik }}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>KK</b> <a class="pull-right">
-                                {{ user.profile.keluarga.nomor_kk }}</a>
+                                <b>KK</b> <a class="pull-right" href="{% url 'backoffice:keluarga:details' keluarga.id %}">
+                                {{ keluarga.nomor_kk }}
+                            </a>
                             </li>
                             <li class="list-group-item">
                                 <b>Total Keluarga</b> <a class="pull-right">
@@ -60,6 +61,7 @@
                         <li class="active"><a href="#tab_1" data-toggle="tab">Profil</a></li>
                         <li><a href="#tab_2" data-toggle="tab">Keluarga</a></li>
                         <li><a href="#tab_3" data-toggle="tab">Akta</a></li>
+                        <li><a href="#tab_4" data-toggle="tab">Surat Pengantar</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_1">
@@ -262,6 +264,11 @@
                                     </tr>
                                 </table>
                             </div>
+                        </div>
+                        <div class="tab-pane" id="tab_4">
+                        <input type="button" class="btn btn-primary"
+                               value="PENGANTAR"
+                               onclick="location.href='{% url "backoffice:users:print_surat_pengantar" user.id %}';">
                         </div>
                         <!-- /.tab-pane -->
                     </div>

@@ -1,4 +1,3 @@
-appdirs==1.4.0
 astroid==1.4.9
 backports.functools-lru-cache==1.3
 backports.shutil-get-terminal-size==1.0.0
@@ -10,6 +9,7 @@ django-appconf==1.0.1
 django-autocomplete-light==3.2.1
 django-bootstrap3==8.1.0
 django-compat==1.0.13
+django-datatable==0.2.1
 django-debug-toolbar==1.6
 django-extensions==1.7.6
 django-favicon-plus==0.0.5
@@ -31,6 +31,7 @@ enum34==1.1.6
 freeze==1.0.10
 funcsigs==1.0.2
 futures==3.0.5
+gunicorn==19.7.1
 html5lib==1.0b8
 ipython==5.1.0
 ipython-genutils==0.1.0
@@ -75,3 +76,6 @@ wcwidth==0.1.7
 webencodings==0.5
 wrapt==1.10.8
 xhtml2pdf==0.0.6
+dj-database-url==0.4.1
+gunicorn==19.6.0
+whitenoise==3.2

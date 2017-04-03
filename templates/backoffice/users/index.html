@@ -23,7 +23,7 @@
                     <p>Total Penduduk</p>
                 </div>
                 <div class="icon">
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-user-circle-o"></i>
                 </div>
                 <a href="#" class="small-box-footer">
                     More info <i class="fa fa-arrow-circle-right"></i>
@@ -35,12 +35,12 @@
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>1</h3>
 
-                    <p>New Orders</p>
+                    <p>Total Keluarga</p>
                 </div>
                 <div class="icon">
-                    <i class="fa fa-shopping-cart"></i>
+                    <i class="fa fa-address-book-o"></i>
                 </div>
                 <a href="#" class="small-box-footer">
                     More info <i class="fa fa-arrow-circle-right"></i>
@@ -52,12 +52,12 @@
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                    <h3>5</h3>
 
-                    <p>Bounce Rate</p>
+                    <p>Arsip</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
+                    <i class="fa fa-archive"></i>
                 </div>
                 <a href="#" class="small-box-footer">
                     More info <i class="fa fa-arrow-circle-right"></i>
@@ -74,7 +74,7 @@
                     <p>Unique Visitors</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-pie-graph"></i>
+                    <i class="fa fa-eye"></i>
                 </div>
                 <a href="#" class="small-box-footer">
                     More info <i class="fa fa-arrow-circle-right"></i>
@@ -86,74 +86,135 @@
     <!-- /.row -->
 
     <!-- =========================================================== -->
-
-    <div class="box">
-    <div class="box-header">
-        <h3 class="box-title"></h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-        <table id="example1" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>NIK</th>
-                <th>Nama</th>
-                {#                <th>Telepon / Mobile</th>#}
-                <th>Umur</th>
-                <th>Pendidikan</th>
-                <th>Pekerjaan</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
+    <!-- Default box -->
+    <div class="box box-solid collapsed-box">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Advance Search</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                <button class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div style="display: none;" class="box-body">
+            <table class="table table-bordered table-striped">
+                <thead>
                 <tr>
-                    <td>
-                        <a href="{% url 'backoffice:users:detail' user.id %}">
-                            {{ user.id }}
-                        </a>
-                    </td>
-
-                    <td>
-                        <a href="{% url 'backoffice:users:detail' user.id %}">
-                            {{ user.profile.nik }}
-                        </a>
-                    </td>
-                    <td>{{ user.name }}</td>
-                    {#                    <td>#}
-                    {#                        {% if user.profile.telpon%}#}
-                    {#                            {{ user.profile.telpon }} /#}
-                    {#                        {% else %}#}
-                    {#                            - /#}
-                    {#                        {% endif %}#}
-                    {#                        {% if user.profile.mobile %}#}
-                    {#                            {{ user.profile.mobile }}#}
-                    {#                        {% else %}#}
-                    {#                            -#}
-                    {#                        {% endif %}#}
-                    {#                    </td>#}
-                    <td>{{ user.profile.age }}</td>
-                    <td>{{ user.profile.get_pendidikan_display }}</td>
-                    <td>{{ user.profile.pekerjaan }}</td>
+                    <th>Target</th>
+                    <th>Search text</th>
+                    <th>Treat as regex</th>
+                    <th>Use smart search</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>ID</th>
-                <th>NIK</th>
-                <th>Nama</th>
-                {#                <th>Telepon / Mobile</th>#}
-                <th>Umur</th>
-                <th>Pendidikan</th>
-                <th>Pekerjaan</th>
-            </tr>
-            </tfoot>
-        </table>
+                </thead>
+                <tbody>
+                <tr id="filter_col1" data-column="0">
+                    <td>NIK</td>
+                    <td><input type="text" class="column_filter" id="col0_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col0_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col0_smart" checked="checked"></td>
+                </tr>
+                <tr id="filter_col2" data-column="1">
+                    <td>Nama</td>
+                    <td><input type="text" class="column_filter" id="col1_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col1_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col1_smart" checked="checked"></td>
+                </tr>
+                <tr id="filter_col3" data-column="2">
+                    <td>Telepon</td>
+                    <td><input type="text" class="column_filter" id="col2_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col2_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col2_smart" checked="checked"></td>
+                </tr>
+                <tr id="filter_col4" data-column="3">
+                    <td>Umur</td>
+                    <td><input type="text" class="column_filter" id="col3_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col3_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col3_smart" checked="checked"></td>
+                </tr>
+                <tr id="filter_col5" data-column="4">
+                    <td>Pendidikan</td>
+                    <td><input type="text" class="column_filter" id="col4_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col4_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col4_smart" checked="checked"></td>
+                </tr>
+                <tr id="filter_col6" data-column="5">
+                    <td>Pekerjaan</td>
+                    <td><input type="text" class="column_filter" id="col5_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col5_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col5_smart" checked="checked"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title"></h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="users" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>NIK</th>
+                    <th>Nama</th>
+                    <th>Telepon / Mobile</th>
+                    <th>Umur</th>
+                    <th>Pendidikan</th>
+                    <th>Pekerjaan</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'backoffice:users:detail' user.id %}">
+                                {% if user.profile.nik %}
+                                    {{ user.profile.nik }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'backoffice:users:detail' user.id %}">
+                                {{ user.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {% if user.profile.telpon%}
+                                {{ user.profile.telpon }} /
+                            {% else %}
+                                - /
+                            {% endif %}
+                            {% if user.profile.mobile %}
+                                {{ user.profile.mobile }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>{{ user.profile.age }}</td>
+                        <td>{{ user.profile.get_pendidikan_display }}</td>
+                        <td>{{ user.profile.pekerjaan }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>NIK</th>
+                    <th>Nama</th>
+                    <th>Telepon / Mobile</th>
+                    <th>Umur</th>
+                    <th>Pendidikan</th>
+                    <th>Pekerjaan</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
     <!-- /.box-body -->
-
 {% endblock %}
 {% block extra_javascript %}
     <!-- DataTables -->
@@ -161,12 +222,29 @@
     {% javascript 'dataTablesBootstrap' %}
     {% javascript 'select2' %}
     {{ form.media }}
+    {#    <script>#}
+    {#        $(function () {#}
+    {#            $("#example1").DataTable({#}
+    {#                autoWidth: false#}
+    {#            });#}
+    {#        });#}
+    {#    </script>#}
     <script>
-        $(function () {
-            $("#example1").DataTable({
-                autoWidth: false,
-
-            });
+        $("#users").DataTable({
+            autoWidth: false
         });
+        function filterColumn ( i ) {
+            $('#users').DataTable().column( i ).search(
+                $('#col'+i+'_filter').val(),
+                $('#col'+i+'_regex').prop('checked'),
+                $('#col'+i+'_smart').prop('checked')
+            ).draw();
+        }
+        $(document).ready(function() {
+            $('#example').dataTable();
+            $('input.column_filter').on( 'keyup click', function () {
+                filterColumn( $(this).parents('tr').attr('data-column') );
+            } );
+        } );
     </script>
 {% endblock %}

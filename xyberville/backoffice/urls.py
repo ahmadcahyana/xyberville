@@ -61,4 +61,9 @@ urlpatterns = patterns(
             'xyberville.backoffice.keluarga.urls', namespace='keluarga'
         )
     ),
+    url(
+        r'pengantar/', include(
+            'xyberville.backoffice.pengantar.urls', namespace='pengantar'
+        )
+    ),
 )

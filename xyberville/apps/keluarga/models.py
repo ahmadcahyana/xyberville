@@ -17,8 +17,8 @@ class Keluarga(models.Model):
         null=True
     )
     alamat = models.CharField(max_length=255)
-    rt = models.CharField(max_length=255)
-    rw = models.CharField(max_length=255)
+    rt = models.CharField(max_length=255, blank=True)
+    rw = models.CharField(max_length=255, blank=True)
     telepon = models.CharField(max_length=255)
     mobile = models.CharField(max_length=255)
     province = models.ForeignKey('regions.Province')

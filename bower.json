@@ -1,14 +1,11 @@
 {
   "name": "xyberville",
   "dependencies": {
-    "cropper": "^2.3.4",
-    "AdminLTE": "admin-lte#^2.3.11",
     "components-font-awesome": "^4.7.0",
     "iCheck": "icheck#^1.0.2",
     "jquery-ui": "^1.12.1",
     "Ionicons": "ionicons#^2.0.1",
     "select2": "^4.0.3",
-    "datetimepicker": "^2.5.4",
     "socket.io": "^1.7.2"
   }
 }

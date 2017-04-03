@@ -3,15 +3,12 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 import django.utils.timezone
-from django.conf import settings
 import model_utils.fields
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('products', '0001_initial'),
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -22,7 +19,6 @@ class Migration(migrations.Migration):
                 ('quantity', models.PositiveSmallIntegerField()),
                 ('price', models.FloatField(null=True, blank=True)),
                 ('tax_amount', models.FloatField(null=True, blank=True)),
-                ('product', models.ForeignKey(related_name='items', to='products.Product')),
             ],
         ),
         migrations.CreateModel(
@@ -43,13 +39,6 @@ class Migration(migrations.Migration):
                 ('refunded', models.DateTimeField(null=True, blank=True)),
                 ('refund_notes', models.TextField(blank=True)),
                 ('rating', models.PositiveSmallIntegerField(blank=True, null=True, choices=[(1, b'1 - Bad'), (2, b'2'), (3, b'3 - Average'), (4, b'4'), (5, b'5 - Best')])),
-                ('customer', models.ForeignKey(related_name='bought', to=settings.AUTH_USER_MODEL)),
-                ('sales_person', models.ForeignKey(related_name='sales', to=settings.AUTH_USER_MODEL)),
             ],
-        ),
-        migrations.AddField(
-            model_name='item',
-            name='sale',
-            field=models.ForeignKey(related_name='items', to='sales.Sale'),
         ),
     ]

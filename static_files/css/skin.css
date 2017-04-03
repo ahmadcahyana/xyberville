@@ -60,13 +60,13 @@
 }
 @media (max-width: 767px) {
   .skin-black .main-header > .logo {
-    background-color: #222222;
+    background-color: #ffffff;
     color: #ffffff;
     border-bottom: 0 solid transparent;
     border-right: none;
   }
   .skin-black .main-header > .logo:hover {
-    background-color: #1f1f1f;
+    background-color: #999999;
   }
 }
 .skin-black .main-header li.user-header {

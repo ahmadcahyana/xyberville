@@ -1,0 +1,152 @@
+{% extends 'backoffice/base.html' %}
+{% load pipeline %}
+{% load i18n static %}
+{% block head_title %}{{ title }}{% endblock %}
+{% block extra_css %}
+    {% stylesheet 'dataTables' %}
+    {% stylesheet 'select2' %}
+{% endblock %}
+{% block bodyclass %}table-page{% endblock %}
+{% block page_header %}{{ title }}{% endblock %}
+{% block breadcrumb %}
+    <li class="active">{{ page }}</li>
+{% endblock %}
+{% block content %}
+    <!-- Default box -->
+    <div class="box box-solid collapsed-box">
+        <div class="box-header">
+            <i class="fa fa-search"></i>
+            <h3 class="box-title">Advance Search</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                <button class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div style="display: none;" class="box-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Target</th>
+                    <th>Search text</th>
+                    <th>Treat as regex</th>
+                    <th>Use smart search</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="filter_col1" data-column="0">
+                    <td>NIK</td>
+                    <td><input type="text" class="column_filter" id="col0_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col0_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col0_smart" checked="checked"></td>
+                </tr>
+                <tr id="filter_col2" data-column="1">
+                    <td>Nama</td>
+                    <td><input type="text" class="column_filter" id="col1_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col1_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col1_smart" checked="checked"></td>
+                </tr>
+                <tr id="filter_col3" data-column="2">
+                    <td>Telepon</td>
+                    <td><input type="text" class="column_filter" id="col2_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col2_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col2_smart" checked="checked"></td>
+                </tr>
+                <tr id="filter_col4" data-column="3">
+                    <td>Umur</td>
+                    <td><input type="text" class="column_filter" id="col3_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col3_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col3_smart" checked="checked"></td>
+                </tr>
+                <tr id="filter_col5" data-column="4">
+                    <td>Pendidikan</td>
+                    <td><input type="text" class="column_filter" id="col4_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col4_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col4_smart" checked="checked"></td>
+                </tr>
+                <tr id="filter_col6" data-column="5">
+                    <td>Pekerjaan</td>
+                    <td><input type="text" class="column_filter" id="col5_filter"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col5_regex"></td>
+                    <td align="center"><input type="checkbox" class="column_filter" id="col5_smart" checked="checked"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title"></h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="users" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Nomor Surat</th>
+                    <th>Nama</th>
+                    <th>Keperluan</th>
+                    <th>Tanggal</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for pengantar_ in pengantar %}
+                    <tr>
+                        <td>
+                            {{ pengantar_.nomor_surat }}
+                        </td>
+                        <td>
+                            {{ pengantar_.user }}
+                        </td>
+                        <td>
+                            {{ pengantar_.get_keperluan_display }}
+                        </td>
+                        <td>{{ pengantar_.tanggal|date:"DATE_FORMAT" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Nomor Surat</th>
+                    <th>Nama</th>
+                    <th>Keperluan</th>
+                    <th>Tanggal</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <!-- /.box-body -->
+{% endblock %}
+{% block extra_javascript %}
+    <!-- DataTables -->
+    {% javascript 'dataTables' %}
+    {% javascript 'dataTablesBootstrap' %}
+    {% javascript 'select2' %}
+    {{ form.media }}
+    {#    <script>#}
+    {#        $(function () {#}
+    {#            $("#example1").DataTable({#}
+    {#                autoWidth: false#}
+    {#            });#}
+    {#        });#}
+    {#    </script>#}
+    <script>
+        $("#users").DataTable({
+            autoWidth: false
+        });
+        function filterColumn ( i ) {
+            $('#users').DataTable().column( i ).search(
+                $('#col'+i+'_filter').val(),
+                $('#col'+i+'_regex').prop('checked'),
+                $('#col'+i+'_smart').prop('checked')
+            ).draw();
+        }
+        $(document).ready(function() {
+            $('#example').dataTable();
+            $('input.column_filter').on( 'keyup click', function () {
+                filterColumn( $(this).parents('tr').attr('data-column') );
+            } );
+        } );
+    </script>
+{% endblock %}

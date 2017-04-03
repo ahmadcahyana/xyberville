@@ -158,6 +158,29 @@ Image">
                                     </li>
                                 </ul>
                             </li>
+                            <li class="treeview {% if page == 'pengantar' %}active{% endif %}">
+                                <a href="#">
+                                    <i class="fa fa-archive"></i>
+                                    <span>Arsip</span>
+                                    <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li {% if sub_page == 'pengantar_index' %}class="active"{% endif %}>
+                                        <a href="{% url "backoffice:pengantar:index" %}">
+                                            <i class="fa fa-user text-green"></i>
+                                            {% trans "Pengantar" %}
+                                        </a>
+                                    </li>
+                                    <li {% if sub_page == 'pengantar_add' %}class="active"{% endif %}>
+                                        <a href="{% url "backoffice:pengantar:add" %}">
+                                            <i class="fa fa-plus text-yellow"></i>
+                                            {% trans "Tambah Pengantar" %}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li>
                                 <a href="{% url "admin:index" %}">
                                     <i class="fa fa-table fa-fw"></i>
@@ -235,6 +258,18 @@ Image">
             });
         }, 2000);
     </script>
+    {% for message in messages %}
+        <script>
+            $(function(){
+                new PNotify({
+                    title: '{{ message.tags|capfirst }} !',
+                    text: '{{ message }}',
+                    type: '{{ message.tags }}',
+                    styling: 'bootstrap3'
+                });
+            });
+        </script>
+    {% endfor %}
     {% block extra_javascript %}
     {% endblock %}
 {% endblock %}
