@@ -77,5 +77,4 @@ webencodings==0.5
 wrapt==1.10.8
 xhtml2pdf==0.0.6
 dj-database-url==0.4.1
-gunicorn==19.6.0
 whitenoise==3.2
