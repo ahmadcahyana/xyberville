@@ -7,7 +7,7 @@ from model_utils import Choices
 
 class CustomUserManager(UserManager):
 
-    def create_user(self, username, email=None, password=None, **extra_fields):
+    def create_user(self, username, email=None, password=None, type=None, **extra_fields):
         now = timezone.now()
         user = self.model(
             username=username,
@@ -16,6 +16,7 @@ class CustomUserManager(UserManager):
             is_superuser=False,
             last_login=now,
             date_joined=now,
+            type = 1,
             **extra_fields
         )
 
@@ -68,11 +69,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=timezone.now
     )
     TYPE = Choices(
-        (1, 'ketua_rw', 'Ketua RW'),
-        (2, 'wakil_ketua_rw', 'Wakil Ketua RW'),
-        (3, 'sekretaris', 'Sekretaris'),
-        (4, 'bendahara', 'Bendahara'),
-        (5, 'ketua_rt', 'Ketua RT')
+        (1, 'admin', 'Administrator'),
+        (2, 'ketua_rw', 'Ketua RW'),
+        (3, 'wakil_ketua_rw', 'Wakil Ketua RW'),
+        (4, 'sekretaris', 'Sekretaris'),
+        (5, 'bendahara', 'Bendahara'),
+        (6, 'ketua_rt', 'Ketua RT')
     )
     type = models.PositiveSmallIntegerField(
         choices=TYPE,
