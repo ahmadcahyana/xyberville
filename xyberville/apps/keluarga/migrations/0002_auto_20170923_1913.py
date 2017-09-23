@@ -8,8 +8,8 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('keluarga', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('keluarga', '0001_initial'),
         ('regions', '0001_initial'),
     ]
 
@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='keluarga',
             name='kepala_keluarga',
-            field=models.ForeignKey(related_name='family', verbose_name=b'Kepala Keluarga', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(blank=True, verbose_name='Kepala Keluarga', related_name='family', null=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='keluarga',

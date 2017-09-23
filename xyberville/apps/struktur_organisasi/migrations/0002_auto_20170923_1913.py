@@ -8,16 +8,16 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('struktur_organisasi', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('regions', '0001_initial'),
+        ('struktur_organisasi', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='rukunwarga',
             name='bendahara',
-            field=models.ForeignKey(related_name='bendahara_rw', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(blank=True, related_name='bendahara_rw', null=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='rukunwarga',
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='rukunwarga',
             name='ketua',
-            field=models.ForeignKey(related_name='ketua_rw', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(blank=True, related_name='ketua_rw', null=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='rukunwarga',
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='rukunwarga',
             name='sekretaris',
-            field=models.ForeignKey(related_name='sekretaris_rw', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(blank=True, related_name='sekretaris_rw', null=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='rukunwarga',
@@ -52,12 +52,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='rukunwarga',
             name='wakil',
-            field=models.ForeignKey(related_name='wakil_rw', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(blank=True, related_name='wakil_rw', null=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='rukuntetanga',
             name='bendahara',
-            field=models.ForeignKey(related_name='bendahara_rt', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(blank=True, related_name='bendahara_rt', null=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='rukuntetanga',
@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='rukuntetanga',
             name='ketua',
-            field=models.ForeignKey(related_name='ketua_rt', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(blank=True, related_name='ketua_rt', null=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='rukuntetanga',
@@ -82,7 +82,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='rukuntetanga',
             name='sekretaris',
-            field=models.ForeignKey(related_name='sekretaris_rt', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(blank=True, related_name='sekretaris_rt', null=True, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='rukuntetanga',
@@ -92,6 +92,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='rukuntetanga',
             name='wakil',
-            field=models.ForeignKey(related_name='wakil_rt', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(blank=True, related_name='wakil_rt', null=True, to=settings.AUTH_USER_MODEL),
         ),
     ]

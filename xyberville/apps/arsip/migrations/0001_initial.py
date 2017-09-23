@@ -15,16 +15,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Klasifikasi',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
                 ('jenis', models.CharField(max_length=255)),
             ],
         ),
         migrations.CreateModel(
             name='Pengantar',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
                 ('nomor_surat', models.CharField(max_length=255)),
-                ('keperluan', models.PositiveIntegerField(verbose_name=((1, b'Pembuatan KTP'), (2, b'Perbaikan Data KTP'), (3, b'Pembuatan SKCK'), (4, b'Domisili'), (5, b'Keterangan Pindah'), (6, b'Menikah'), (7, b'Cerai'), (8, b'Lainnya')))),
+                ('keperluan', models.PositiveSmallIntegerField(choices=[(1, 'Pembuatan KTP'), (2, 'Perbaikan Data KTP'), (3, 'Pembuatan SKCK'), (4, 'Domisili'), (5, 'Keterangan Pindah'), (6, 'Menikah'), (7, 'Cerai'), (8, 'Lainnya')])),
                 ('lainnya', models.TextField(blank=True)),
                 ('tanggal', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False)),
                 ('jenis', models.ForeignKey(to='arsip.Klasifikasi')),

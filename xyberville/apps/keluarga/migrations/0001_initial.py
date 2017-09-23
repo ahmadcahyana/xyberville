@@ -14,19 +14,19 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Keluarga',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('nomor_kk', models.CharField(unique=True, max_length=255, verbose_name=b'Nomor KK')),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
+                ('nomor_kk', models.CharField(unique=True, verbose_name='Nomor KK', max_length=255)),
                 ('alamat', models.CharField(max_length=255)),
-                ('rt', models.CharField(max_length=255, blank=True)),
-                ('rw', models.CharField(max_length=255, blank=True)),
+                ('rt', models.CharField(blank=True, max_length=255)),
+                ('rw', models.CharField(blank=True, max_length=255)),
                 ('telepon', models.CharField(max_length=255)),
                 ('mobile', models.CharField(max_length=255)),
                 ('district', models.ForeignKey(to='regions.District')),
             ],
             options={
-                'db_table': 'keluarga',
-                'verbose_name': 'keluarga',
                 'verbose_name_plural': 'keluargas',
+                'verbose_name': 'keluarga',
+                'db_table': 'keluarga',
             },
         ),
     ]

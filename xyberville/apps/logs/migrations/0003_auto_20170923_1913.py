@@ -8,9 +8,9 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('logs', '0002_userprofilelogs_profile'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('keluarga', '0002_auto_20170326_2204'),
+        ('keluarga', '0002_auto_20170923_1913'),
+        ('logs', '0002_userprofilelogs_profile'),
     ]
 
     operations = [

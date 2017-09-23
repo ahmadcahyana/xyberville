@@ -13,9 +13,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Pekerjaan',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.AutoField(auto_created=True, verbose_name='ID', primary_key=True, serialize=False)),
                 ('nama', models.CharField(max_length=255)),
-                ('keterangan', models.TextField(null=True, blank=True)),
+                ('keterangan', models.TextField(blank=True, null=True)),
             ],
         ),
     ]

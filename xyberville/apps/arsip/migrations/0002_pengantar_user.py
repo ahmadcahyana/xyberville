@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='pengantar',
-            name='warga',
+            name='user',
             field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
         ),
     ]
